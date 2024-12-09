@@ -57,22 +57,4 @@ def fill_missing_hr_data(df):
     recieved_number_of_samples = df.shape[0]
     percentage_missing=  ((expected_number_of_samples-recieved_number_of_samples)/expected_number_of_samples)*100
     print("Percentage of missing data: ", percentage_missing)
-    
-#     # Set index to watch_timestamp for reindexing
-#     df = df.set_index('watch_timestamp')
-#     print("set_index: ",df)
-#     # Reindex with the complete time index
-#     df = df.reindex(full_time_index)
-    
-#     # Fill missing bpm values with -1
-#     df['bpm'] = df['bpm'].fillna(-1)
-
-#     # Reset the index to restore watch_timestamp as a column
-#     df = df.reset_index().rename(columns={'index': 'watch_timestamp'})
-
-#     # Fill other columns with 'NaN' for newly created rows
-#     for col in df.columns:
-#         if col != 'watch_timestamp' and col != 'bpm':
-#             df[col] = df[col].fillna('NaN')
-            
     return percentage_missing
