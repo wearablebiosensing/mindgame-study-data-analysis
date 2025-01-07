@@ -13,8 +13,9 @@ import plotly.graph_objects as go
 
 
 ############################################################
-#  HELPER FUNCTION.   #
+#  HELPER FUNCTIONS.   #
 ############################################################
+
 def custom_function(timestamp_string):
     #print("custom_function timestamp_string: ",timestamp_string.split(" ")[1],"\n")
     return timestamp_string.split(" ")[1]
@@ -30,8 +31,13 @@ def extract_and_convert(x):
     try:
         return int(x.split("_")[1]) #int(x[1])
     except (IndexError, ValueError):
-        return None  # or any default value you prefer
+        return None  # or any default value you prefer.
 
+############################################################
+#  HELPER FUNCTIONS.   #
+############################################################
+
+# to check the correctness of the data.
 def percentage_zeros_hr(df_hr):
     # Count the total number of zeros
     total_zeros = (df_hr == 0).sum().sum()
@@ -41,7 +47,10 @@ def percentage_zeros_hr(df_hr):
     percentage_zeros = (total_zeros / total_elements) * 100
     return percentage_zeros
 
-def fill_missing_hr_data(df):
+def snr_hr(df_hr):
+    return df_hr["bpm"].mean()/df_hr["bpm"].std()
+
+def percentage_missing_hr(df):
     # Create DataFrame
     df = pd.DataFrame(df)
     # Convert watch_timestamp to datetime
@@ -49,7 +58,6 @@ def fill_missing_hr_data(df):
     # Generate a complete time index.
     start_time = df.iloc[0]["watch_timestamp"] #df['watch_timestamp'].min()
     end_time = df.iloc[-1]["watch_timestamp"] #df['watch_timestamp'].max()
-    
     print("start_time,end_time: ",start_time,end_time)
     full_time_index = pd.date_range(start=start_time, end=end_time, freq='1S')
     print("df: ",df.shape[0],"len(full_time_index): ",len(full_time_index))
